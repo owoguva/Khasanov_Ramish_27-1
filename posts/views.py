@@ -11,3 +11,14 @@ def posts_view(request):
             'posts': posts
         }
         return render(request, 'products/posts.html', context=context)
+
+
+def post_detail_view(request, id):
+    if request.method == "GET":
+        post = Post.objects.get(id=id)
+
+        context = {
+            'post': post
+        }
+
+        return render(request, 'products/detail.html', context=context)
