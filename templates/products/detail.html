@@ -1,7 +1,38 @@
 {% extends 'layouts/index.html' %}
 
 {% block content %}
+    <style type="text/css">
+        .post_block{
+            width: 80%;
+            margin-left: 10%;
+            margin-top: 50px;
+    }
+        .post_block > img {
+            width: 100%;
+        }
+        .dates {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .comments {
+            margin-top: 30px;
+        }
+        .comment_block {
+            background: #242b2e;
+            margin-bottom: 20px;
+            color: #ffffff;
+            padding: 10px;
+        }
+    </style>
+
+
     <div class="post_block">
+        {% if post.image  %}
+            <img src="/media/{{ post.image }}" alt="">
+        {% else %}
+            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fru.freepik.com%2Fpremium-vector%2Ferror-404-page-not-found-vector-concept-icon-internet-website-down-simple-flat-design_23141776.htm&psig=AOvVaw3N_mv8vkriKDgmMh_O8N0n&ust=1682261265052000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPDSpNzdvf4CFQAAAAAdAAAAABAK">
+        {% endif %}
         <div class="info">
             <h1>{{post.title}}</h1>>
             <h4>{{ post.description }}</h4>
@@ -11,5 +42,12 @@
                 <h5>Modified Date {{ post.modified_date }}</h5>>
             </div>
         </div>>
+        <div class="comments">
+            {% for comment in comments %}
+                <div class="comment_block">
+                    <h5>{{ comment.text }}</h5>
+                </div>
+            {% endfor %}
+        </div>
     </div>>
 {% endblock %}

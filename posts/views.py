@@ -18,7 +18,8 @@ def post_detail_view(request, id):
         post = Post.objects.get(id=id)
 
         context = {
-            'post': post
+            'post': post,
+            'comments': post.comment_set.all()
         }
 
         return render(request, 'products/detail.html', context=context)
