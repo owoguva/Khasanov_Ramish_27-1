@@ -5,7 +5,7 @@ from django.db import models
 class Post(models.Model):
     image = models.ImageField()
     title = models.CharField(max_length=255)
-    decription = models.TextField()
+    description = models.TextField()
     rate = models.FloatField()
     created_date = models.DateField(auto_now=True)
     modified_date = models.DateField(auto_now_add=True)
@@ -19,3 +19,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+
+
+class Review(models.Model):
+    name = models.CharField(max_length=100)
+    text = models.TextField()
+    product = models.ForeignKey(Post, on_delete=models.CASCADE)
