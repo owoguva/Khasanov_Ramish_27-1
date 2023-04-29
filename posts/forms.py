@@ -9,8 +9,7 @@ class PostCreatForm(forms.Form):
 
 
 class ReviewCreateForm(forms.Form):
-    name = forms.CharField(max_length=100)
     text = forms.CharField(widget=forms.Textarea)
-    product = forms.IntegerField(widget=forms.HiddenInput)
+
 
 

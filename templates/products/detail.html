@@ -36,12 +36,21 @@
         <div class="info">
             <h1>{{post.title}}</h1>>
             <h4>{{ post.description }}</h4>
-            <h5>Rate: {{ post.rate }}</h5>>
+            <h4>Rate: {{ post.rate }}</h4>>
             <div class="dates">
-                <h5>Created Date {{ post.created_date }}</h5>>
-                <h5>Modified Date {{ post.modified_date }}</h5>>
+                <p>Created Date {{ post.created_date }}</p>>
+                <p>Modified Date {{ post.modified_date }}</p>>
             </div>
+        </div>
+    {% if not user.is_anonymous %}
+        <div class="creat_comments">
+            <form action="/posts/{{ post.id }}/" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Add comment">
+            </form>
         </div>>
+    {% endif %}
         <div class="comments">
             {% for comment in comments %}
                 <div class="comment_block">
