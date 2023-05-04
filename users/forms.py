@@ -8,3 +8,6 @@ class RegisterForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=20)
     password1 = forms.CharField(widget=forms.PasswordInput(), min_length=3)
+
+
+

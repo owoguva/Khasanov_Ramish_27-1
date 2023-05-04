@@ -1,21 +1,40 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from posts.models import Post, Comment
 from posts.forms import PostCreatForm, ReviewCreateForm
+from posts.constants import PAGINATION_LIMIT
 def main_page_view(requests):
     if requests.method == 'GET':
         context= {
             'user': requests.user
         }
 
-        return render(requests, 'layouts/index.html')
+        return render(requests, 'layouts/index.html', context=context)
 
 def posts_view(request):
     if request.method == 'GET':
-        print(request.user)
         posts = Post.objects.all()
+        search = request.GET.get('search')
+        page = int(request.GET.get('page', 1))
+
+        max_page = posts.__len__() / PAGINATION_LIMIT
+        if round(max_page) < max_page:
+            max_page = round(max_page) + 1
+        else:
+            max_page = round(max_page)
+
+
+        posts = posts[PAGINATION_LIMIT *(page-1):PAGINATION_LIMIT * page]
+
+        if search:
+            posts = posts.filter(
+                Q(title__icontains=search) |
+                Q(description__icontains=search))
+
         context = {
             'posts': posts,
-            'user': request.user
+            'user': request.user,
+            'pages': range(1, max_page+1)
         }
         return render(request, 'products/posts.html', context=context)
 
