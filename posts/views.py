@@ -23,13 +23,12 @@ def posts_view(request):
         else:
             max_page = round(max_page)
 
-
-        posts = posts[PAGINATION_LIMIT *(page-1):PAGINATION_LIMIT * page]
-
         if search:
             posts = posts.filter(
                 Q(title__icontains=search) |
                 Q(description__icontains=search))
+
+        posts = posts[PAGINATION_LIMIT * (page - 1):PAGINATION_LIMIT * page]
 
         context = {
             'posts': posts,
@@ -37,6 +36,7 @@ def posts_view(request):
             'pages': range(1, max_page+1)
         }
         return render(request, 'products/posts.html', context=context)
+
 
 
 def post_detail_view(request, id):
